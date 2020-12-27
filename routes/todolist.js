@@ -1,9 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const todolistControllers = require('../controllers/todolist')
+const todolistControllers = require("../controllers/todolist");
+const passport = require("passport");
 
-router.get('/', todolistControllers.getTodolist);
-router.post('/', todolistControllers.createTodolist);
-router.put('/:id', todolistControllers.updateTodolist);
+const authentication = passport.authenticate("jwt", { session: false });
+
+router.get("/", authentication, todolistControllers.getTodolist);
+router.post("/", authentication, todolistControllers.createTodolist);
+router.put("/:id", authentication, todolistControllers.updateTodolist);
 
 module.exports = router;
